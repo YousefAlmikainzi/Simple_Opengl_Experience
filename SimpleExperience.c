@@ -34,3 +34,7 @@ void framebuffer(GLFWwindow* window, int width, int height)
     glViewport(0,0,width, height);
 }
 
+//drew 9 points in an 3x3 formation
+//made from them 3 triangles since that is what makes a slice horizontally across a 3x3 points
+//using different sizes for each slice to showcase how a sphere closes and the top and bottom and widest in the middle
+//finally understanding opp in right triangle is what gets us our radius for horizontal
