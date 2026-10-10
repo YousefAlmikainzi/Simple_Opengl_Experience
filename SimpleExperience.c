@@ -6,6 +6,7 @@
 
 #define RESOLUTION_Y 800
 #define RESOLUTION_X 1000
+#define PI 3.14159265358979323846
 
 void framebuffer(GLFWwindow* window, int width, int height);
 void readEntireFile(char* strBuffer, FILE* shaderFile);
@@ -45,3 +46,41 @@ void framebuffer(GLFWwindow* window, int width, int height)
 //x = radius * cos (φ)
 //y = cos(theta)
 //z = radius * sin(φ)
+//θ = i × π ÷ (rows − 1)
+//φ = j × 2π ÷ (col)
+
+float *Sphere()
+{
+    int row = 3;
+    int col = 3;
+
+    int point;
+    float theta;
+    float phi;
+
+    float x;
+    float y;
+    float z;
+
+    int quadIndex = 3;
+    float *sphere = malloc(sizeof(float) * row * col * quadIndex);
+
+    for(int i = 0; i < row; i++)
+    {
+        theta = i * PI / (float)(row - 1);
+        for(int j = 0; j < col; j++)
+        {
+            point = i * col + j;
+            phi = j * 2*PI / col;
+            x = sin(theta) * cos (phi);
+            y = cos(theta);
+            z = sin(theta) * sin(phi);
+            sphere[point * quadIndex + 0] = x;
+            sphere[point * quadIndex + 1] = y;
+            sphere[point * quadIndex + 2] = z;
+        }
+    }
+
+
+    return sphere;
+}
