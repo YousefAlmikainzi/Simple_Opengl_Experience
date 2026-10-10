@@ -39,4 +39,9 @@ void framebuffer(GLFWwindow* window, int width, int height)
 //using different sizes for each slice to showcase how a sphere closes and the top and bottom and widest in the middle, sin(0) means bottom or top of sphere
 //finally understanding opp in right triangle is what gets us our radius for horizontal
 // slice radius = sin(θ), height = cos(θ), θ: 0 → 180
-// NEXT: x, y, z of a point using θ and φ
+// φ is the angle adj to x-axis
+// and knowing that we can get our formulas
+// radius = sin(theta)
+//x = radius * cos (φ)
+//y = cos(theta)
+//z = radius * sin(φ)
