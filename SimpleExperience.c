@@ -9,9 +9,19 @@
 #define PI 3.14159265358979323846
 
 void framebuffer(GLFWwindow* window, int width, int height);
+float *Sphere();
+void convertFileToString(char* strBuffer, FILE* shaderFile);
 
 int main()
 {
+    //reading shader files
+    FILE *vertexFile = fopen("VertexShader.vs", "r");
+    FILE *fragmentFile = fopen("FragmentShader.fs", "r");
+    //creating sizes to store my shader files onto string
+    char *vertexSize = malloc(sizeof(char) * 1000);
+    char *fragmentSize = malloc(sizeof(char) * 1000);
+
+
     glfwInit();
     GLFWwindow *window = glfwCreateWindow(RESOLUTION_X, RESOLUTION_Y, "OpenGlScene", NULL, NULL);
     glfwMakeContextCurrent(window);
@@ -79,7 +89,16 @@ float *Sphere()
             sphere[point * FloatPerVer + 2] = z;
         }
     }
-
-
     return sphere;
+}
+
+void convertFileToString(char* strBuffer, FILE* shaderFile)
+{
+    //doing this make whenever the file is interacted with it would be at the end of the file
+    fseek(shaderFile, 0, SEEK_END);
+    long fileSize = ftell(shaderFile);
+    rewind(shaderFile);
+    //convert the shaderFile into string so I can use it
+    fread(strBuffer, 1, fileSize, shaderFile);
+    strBuffer[fileSize] = '\0';
 }
