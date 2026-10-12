@@ -9,7 +9,6 @@
 #define PI 3.14159265358979323846
 
 void framebuffer(GLFWwindow* window, int width, int height);
-void readEntireFile(char* strBuffer, FILE* shaderFile);
 
 int main()
 {
@@ -62,8 +61,8 @@ float *Sphere()
     float y;
     float z;
 
-    int quadIndex = 3;
-    float *sphere = malloc(sizeof(float) * row * col * quadIndex);
+    int FloatPerVer = 3;
+    float *sphere = malloc(sizeof(float) * row * col * FloatPerVer);
 
     for(int i = 0; i < row; i++)
     {
@@ -75,9 +74,9 @@ float *Sphere()
             x = sin(theta) * cos (phi);
             y = cos(theta);
             z = sin(theta) * sin(phi);
-            sphere[point * quadIndex + 0] = x;
-            sphere[point * quadIndex + 1] = y;
-            sphere[point * quadIndex + 2] = z;
+            sphere[point * FloatPerVer + 0] = x;
+            sphere[point * FloatPerVer + 1] = y;
+            sphere[point * FloatPerVer + 2] = z;
         }
     }
 
