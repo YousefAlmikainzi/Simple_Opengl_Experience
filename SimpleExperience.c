@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#define RESOLUTION_Y 800
+#define RESOLUTION_Y 1000
 #define RESOLUTION_X 1000
 #define PI 3.14159265358979323846
 
@@ -20,10 +20,42 @@ int main()
     //creating sizes to store my shader files onto string
     char *vertexSize = malloc(sizeof(char) * 1000);
     char *fragmentSize = malloc(sizeof(char) * 1000);
+    //read file and convert to a string
+    convertFileToString(vertexSize, vertexFile);
+    convertFileToString(fragmentSize, fragmentFile);
+    const char* vertexString = vertexSize;
+    const char* fragmentString = fragmentSize;
+    fclose(vertexFile);
+    fclose(fragmentFile);
 
+    //compiling vertex shader
+    //Creating a variable id to use later as our key to access our shader
+    unsigned int vertexID = 0;
+    //creating a shader object
+    vertexID = glCreateShader(GL_VERTEX_SHADER);
+    //Loading the shader string into the vertexID which is our key
+    glShaderSource(vertexID, 1, &vertexString, NULL);
+    //compile the shader so it can be used later
+    glCompileShader(vertexID);
+    //compiling fragment shader
+    unsigned int fragmentID = 0;
+    fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentID, 1, &fragmentString, NULL);
+    glCompileShader(fragmentID);
+    //linking both shaders
+    unsigned int shaderLink = 0;
+    shaderLink = glCreateProgram();
+    glAttachShader(shaderLink, vertexID);
+    glAttachShader(shaderLink, fragmentID);
+    glLinkProgram(shaderLink);
+
+    free(vertexSize);
+    free(fragmentSize);
+    glDeleteShader(vertexID);
+    glDeleteShader(fragmentID);
 
     glfwInit();
-    GLFWwindow *window = glfwCreateWindow(RESOLUTION_X, RESOLUTION_Y, "OpenGlScene", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(RESOLUTION_X, RESOLUTION_Y, "SphereScene", NULL, NULL);
     glfwMakeContextCurrent(window);
     gladLoadGLLoader((void*)glfwGetProcAddress);
     glEnable(GL_DEPTH_TEST);
