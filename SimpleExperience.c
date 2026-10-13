@@ -18,8 +18,8 @@ int main()
     FILE *vertexFile = fopen("VertexShader.vs", "r");
     FILE *fragmentFile = fopen("FragmentShader.fs", "r");
     //creating sizes to store my shader files onto string
-    char *vertexSize = malloc(sizeof(char) * 1000);
-    char *fragmentSize = malloc(sizeof(char) * 1000);
+    char *vertexSize = malloc(sizeof(char) * 2000);
+    char *fragmentSize = malloc(sizeof(char) * 2000);
     //read file and convert to a string
     convertFileToString(vertexSize, vertexFile);
     convertFileToString(fragmentSize, fragmentFile);
@@ -27,6 +27,16 @@ int main()
     const char* fragmentString = fragmentSize;
     fclose(vertexFile);
     fclose(fragmentFile);
+
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    GLFWwindow *window = glfwCreateWindow(RESOLUTION_X, RESOLUTION_Y, "SphereScene", NULL, NULL);
+    glfwMakeContextCurrent(window);
+    gladLoadGLLoader((void*)glfwGetProcAddress);
+    glEnable(GL_DEPTH_TEST);
+    glfwSetFramebufferSizeCallback(window, framebuffer);
 
     //compiling vertex shader
     //Creating a variable id to use later as our key to access our shader
@@ -54,17 +64,31 @@ int main()
     glDeleteShader(vertexID);
     glDeleteShader(fragmentID);
 
-    glfwInit();
-    GLFWwindow *window = glfwCreateWindow(RESOLUTION_X, RESOLUTION_Y, "SphereScene", NULL, NULL);
-    glfwMakeContextCurrent(window);
-    gladLoadGLLoader((void*)glfwGetProcAddress);
-    glEnable(GL_DEPTH_TEST);
-    glfwSetFramebufferSizeCallback(window, framebuffer);
+    //sphere creating
+    float *sphere = Sphere();
+    //VBO and VAO
+    unsigned VBO, VAO;
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(float) * 3 * 3 * 3, sphere,GL_STATIC_DRAW);
+    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3 * sizeof(float),(void*)0);
+    glEnableVertexAttribArray(0);
+    free(sphere);
 
+    glPointSize(10.0f);
     while(!glfwWindowShouldClose(window))
     {
         glClearColor(0.3f, 0.1f, 0.9f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //use shader
+        glUseProgram(shaderLink);
+
+        //draw sphere
+        glBindVertexArray(VAO);
+        glDrawArrays(GL_POINTS, 0, 9);
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
