@@ -8,6 +8,9 @@
 #define RESOLUTION_X 1000
 #define PI 3.14159265358979323846
 
+int row = 3;
+int col = 3;
+
 void framebuffer(GLFWwindow* window, int width, int height);
 float *Sphere();
 void convertFileToString(char* strBuffer, FILE* shaderFile);
@@ -72,7 +75,7 @@ int main()
     glBindVertexArray(VAO);
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(float) * 3 * 3 * 3, sphere,GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(float) * row * col * 3, sphere,GL_STATIC_DRAW);
     glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3 * sizeof(float),(void*)0);
     glEnableVertexAttribArray(0);
     free(sphere);
@@ -116,9 +119,6 @@ void framebuffer(GLFWwindow* window, int width, int height)
 
 float *Sphere()
 {
-    int row = 3;
-    int col = 3;
-
     int point;
     float theta;
     float phi;
