@@ -15,6 +15,11 @@ void framebuffer(GLFWwindow* window, int width, int height);
 float *Sphere();
 void convertFileToString(char* strBuffer, FILE* shaderFile);
 
+//in indicing for a Sphere we take our 3x3 points and connect them into 4 squares
+//we divid that into 8 triangles, there are 2 ways we can indice our points clockwise
+//or counter-clockwise and to not get confused it is best to choose 1 way
+//for all our triangles
+
 int main()
 {
     //reading shader files
