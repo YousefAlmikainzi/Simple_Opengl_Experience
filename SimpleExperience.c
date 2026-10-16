@@ -80,6 +80,8 @@ int main()
     glEnableVertexAttribArray(0);
     free(sphere);
 
+    int colorLoc = glGetUniformLocation(shaderLink, "uColor");
+
     glPointSize(10.0f);
     while(!glfwWindowShouldClose(window))
     {
@@ -90,6 +92,7 @@ int main()
 
         //draw sphere
         glBindVertexArray(VAO);
+        glUniform3f(colorLoc, 0.0f, 0.0f, 0.0f);
         glDrawArrays(GL_POINTS, 0, 9);
 
         glfwSwapBuffers(window);
