@@ -156,6 +156,14 @@ float *Sphere()
     return sphere;
 }
 
+//0 = a        1 = a + 1
+//3 = a + col  4 = a + col + 1
+
+//0 = a, 1 = a + 1 , 3 = a + col,
+//3 = a + col, 1 = a + 1, 4 = a + col + 1
+//these are our formulas to create indices
+//2 per row with the connecting the dots to make a sphere we have to repeat so it will be 3
+
 void convertFileToString(char* strBuffer, FILE* shaderFile)
 {
     //doing this make whenever the file is interacted with it would be at the end of the file
