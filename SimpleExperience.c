@@ -98,7 +98,7 @@ int main()
         //draw sphere
         glBindVertexArray(VAO);
         glUniform3f(colorLoc, 0.0f, 0.0f, 0.0f);
-        glDrawArrays(GL_POINTS, 0, 9);
+        glDrawArrays(GL_TRIANGLES, 0, 9);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -135,16 +135,18 @@ float *Sphere()
     float y;
     float z;
 
+    int rowWidth = col + 1;
+
     int FloatPerVer = 3;
-    float *sphere = malloc(sizeof(float) * row * col * FloatPerVer);
+    float *sphere = malloc(sizeof(float) * row * rowWidth * FloatPerVer);
 
     for(int i = 0; i < row; i++)
     {
         theta = i * PI / (float)(row - 1);
-        for(int j = 0; j < col; j++)
+        for(int j = 0; j < rowWidth; j++)
         {
-            point = i * col + j;
-            phi = j * 2*PI / col;
+            point = i * rowWidth + j;
+            phi = j * 2*PI / rowWidth;
             x = sin(theta) * cos (phi);
             y = cos(theta);
             z = sin(theta) * sin(phi);
