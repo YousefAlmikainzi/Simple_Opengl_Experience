@@ -9,7 +9,8 @@
 #define PI 3.14159265358979323846
 
 int row = 3;
-int col = 3;
+const int col = 3;
+int rowWidth = col + 1;
 
 void framebuffer(GLFWwindow* window, int width, int height);
 float *Sphere();
@@ -80,7 +81,7 @@ int main()
     glBindVertexArray(VAO);
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(float) * row * col * 3, sphere,GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(float) * row * rowWidth * 3, sphere,GL_STATIC_DRAW);
     glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3 * sizeof(float),(void*)0);
     glEnableVertexAttribArray(0);
     free(sphere);
@@ -98,7 +99,7 @@ int main()
         //draw sphere
         glBindVertexArray(VAO);
         glUniform3f(colorLoc, 0.0f, 0.0f, 0.0f);
-        glDrawArrays(GL_TRIANGLES, 0, 9);
+        glDrawArrays(GL_TRIANGLES, 0, rowWidth * row);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -135,8 +136,6 @@ float *Sphere()
     float y;
     float z;
 
-    int rowWidth = col + 1;
-
     int FloatPerVer = 3;
     float *sphere = malloc(sizeof(float) * row * rowWidth * FloatPerVer);
 
@@ -146,7 +145,7 @@ float *Sphere()
         for(int j = 0; j < rowWidth; j++)
         {
             point = i * rowWidth + j;
-            phi = j * 2*PI / rowWidth;
+            phi = j * 2*PI / col;
             x = sin(theta) * cos (phi);
             y = cos(theta);
             z = sin(theta) * sin(phi);
