@@ -8,12 +8,14 @@
 #define RESOLUTION_X 1000
 #define PI 3.14159265358979323846
 
-int row = 3;
+const int row = 3;
 const int col = 3;
-int rowWidth = col + 1;
+const int rowWidth = col + 1;
+int indexCount = col*(row - 1)*6;
 
 void framebuffer(GLFWwindow* window, int width, int height);
 float *Sphere();
+unsigned int *Sphere_Indices();
 void convertFileToString(char* strBuffer, FILE* shaderFile);
 
 //in indicing for a Sphere we take our 3x3 points and connect them into 4 squares
@@ -160,10 +162,22 @@ float *Sphere()
 //0 = a        1 = a + 1
 //3 = a + col  4 = a + col + 1
 
+//for col
 //0 = a, 1 = a + 1 , 3 = a + col,
 //3 = a + col, 1 = a + 1, 4 = a + col + 1
 //these are our formulas to create indices
 //2 per row with the connecting the dots to make a sphere we have to repeat so it will be 3
+
+//for rowWidth;
+//if a = 0, in a
+//0 1
+//4 5
+//1 = a+1, 4 = a+rowWidth, 5 = a+rowWidth+1
+unsigned int *Sphere_Indices()
+{
+    unsigned int *sphereIndices = malloc(sizeof(unsigned int) * indexCount);
+    return sphereIndices;
+}
 
 void convertFileToString(char* strBuffer, FILE* shaderFile)
 {
