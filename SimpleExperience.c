@@ -8,8 +8,8 @@
 #define RESOLUTION_X 1000
 #define PI 3.14159265358979323846
 
-const int row = 3;
-const int col = 3;
+const int row = 100;
+const int col = 200;
 const int rowWidth = col + 1;
 int indexCount = col*(row - 1)*6;
 
@@ -77,8 +77,9 @@ int main()
 
     //sphere creating
     float *sphere = Sphere();
+    unsigned int *sphereIndices = Sphere_Indices();
     //VBO and VAO
-    unsigned VBO, VAO;
+    unsigned VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     glGenBuffers(1, &VBO);
@@ -86,7 +87,12 @@ int main()
     glBufferData(GL_ARRAY_BUFFER,sizeof(float) * row * rowWidth * 3, sphere,GL_STATIC_DRAW);
     glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3 * sizeof(float),(void*)0);
     glEnableVertexAttribArray(0);
+    glGenBuffers(1, &EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indexCount, sphereIndices, GL_STATIC_DRAW);
+
     free(sphere);
+    free(sphereIndices);
 
     int colorLoc = glGetUniformLocation(shaderLink, "uColor");
 
@@ -101,7 +107,7 @@ int main()
         //draw sphere
         glBindVertexArray(VAO);
         glUniform3f(colorLoc, 0.0f, 0.0f, 0.0f);
-        glDrawArrays(GL_TRIANGLES, 0, rowWidth * row);
+        glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
