@@ -175,7 +175,31 @@ float *Sphere()
 //1 = a+1, 4 = a+rowWidth, 5 = a+rowWidth+1
 unsigned int *Sphere_Indices()
 {
+    int a;
     unsigned int *sphereIndices = malloc(sizeof(unsigned int) * indexCount);
+    int counter = 0;
+
+    for(int i = 0; i < row - 1; i++)
+    {
+        for (int j = 0; j < col; j++)
+
+        {
+            a = i * rowWidth + j;
+            sphereIndices[counter] = a;
+            counter++;
+            sphereIndices[counter] = a + 1;
+            counter++;
+            sphereIndices[counter] = a + rowWidth;
+            counter++;
+            sphereIndices[counter] = a + 1;
+            counter++;
+            sphereIndices[counter] = a + rowWidth + 1;
+            counter++;
+            sphereIndices[counter] = a + rowWidth;
+            counter++;
+        }
+    }
+
     return sphereIndices;
 }
 
