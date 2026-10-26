@@ -8,8 +8,8 @@
 #define RESOLUTION_X 1000
 #define PI 3.14159265358979323846
 
-const int row = 100;
-const int col = 200;
+const int row = 4;
+const int col = 8;
 const int rowWidth = col + 1;
 int indexCount = col*(row - 1)*6;
 
@@ -47,6 +47,7 @@ int main()
     glfwMakeContextCurrent(window);
     gladLoadGLLoader((void*)glfwGetProcAddress);
     glEnable(GL_DEPTH_TEST);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glfwSetFramebufferSizeCallback(window, framebuffer);
 
     //compiling vertex shader
