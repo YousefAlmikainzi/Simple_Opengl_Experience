@@ -8,8 +8,8 @@
 #define RESOLUTION_X 1000
 #define PI 3.14159265358979323846
 
-const int row = 4;
-const int col = 8;
+const int row = 3;
+const int col = 2;
 const int rowWidth = col + 1;
 int indexCount = col*(row - 1)*6;
 
@@ -47,7 +47,7 @@ int main()
     glfwMakeContextCurrent(window);
     gladLoadGLLoader((void*)glfwGetProcAddress);
     glEnable(GL_DEPTH_TEST);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glfwSetFramebufferSizeCallback(window, framebuffer);
 
     //compiling vertex shader
@@ -134,6 +134,12 @@ void framebuffer(GLFWwindow* window, int width, int height)
 //z = radius * sin(φ)
 //θ = i × π ÷ (rows − 1)
 //φ = j × 2π ÷ (col)
+
+//10-27 notes:
+//A sphere is a stack of plates. Each plate is a circle of col points.
+//Going down, the plates change size and height.
+//θ: 0° → 180°, radius = sin θ, y = cos θ. sin = 0 at both ends seals the top and bottom.
+//φ: 0° → 360°, x = sin θ cos φ, z = sin θ sin φ.
 
 float *Sphere()
 {
