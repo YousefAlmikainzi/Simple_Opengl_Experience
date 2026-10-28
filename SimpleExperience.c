@@ -8,8 +8,8 @@
 #define RESOLUTION_X 1000
 #define PI 3.14159265358979323846
 
-const int row = 3;
-const int col = 2;
+const int row = 1000;
+const int col = 1000;
 const int rowWidth = col + 1;
 int indexCount = col*(row - 1)*6;
 
@@ -107,7 +107,7 @@ int main()
 
         //draw sphere
         glBindVertexArray(VAO);
-        glUniform3f(colorLoc, 0.0f, 0.0f, 0.0f);
+        glUniform3f(colorLoc, 1.0f, 1.0f, 1.0f);
         glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
