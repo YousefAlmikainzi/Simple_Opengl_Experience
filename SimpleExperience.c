@@ -151,7 +151,7 @@ float *Sphere()
     float y;
     float z;
 
-    int FloatPerVer = 3;
+    int FloatPerVer = 6;
     float *sphere = malloc(sizeof(float) * row * rowWidth * FloatPerVer);
 
     for(int i = 0; i < row; i++)
@@ -164,9 +164,15 @@ float *Sphere()
             x = sin(theta) * cos (phi);
             y = cos(theta);
             z = sin(theta) * sin(phi);
+            //positions
             sphere[point * FloatPerVer + 0] = x;
             sphere[point * FloatPerVer + 1] = y;
             sphere[point * FloatPerVer + 2] = z;
+
+            //normals
+            sphere[point * FloatPerVer + 3] = x;
+            sphere[point * FloatPerVer + 4] = y;
+            sphere[point * FloatPerVer + 5] = z;
         }
     }
     return sphere;
