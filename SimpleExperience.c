@@ -110,7 +110,7 @@ int main()
 
         //draw sphere
         glBindVertexArray(VAO);
-        glUniform3f(colorLoc, 1.0f, 1.0f, 1.0f);
+        glUniform3f(colorLoc, 0.0f, 1.0f, 1.0f);
         glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
